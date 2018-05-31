@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e -u -x
+
+ssh="ssh \
+    -F $HOME/.ssh/config \
+    -o ControlMaster=no \
+    -v \
+    deluged-proxy \
+    pppd \
+        nodetach \
+        notty \
+        noauth \
+        ifname ppp-deluged"
+exec socat TCP-LISTEN:7777,reuseaddr,fork EXEC:"$ssh"

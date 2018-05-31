@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e -u -x
+cd "$(dirname "$0")"
+
+iidfile=$(mktemp)
+rm_iidfile() {
+    rm "$iidfile"
+}
+trap rm_iidfile EXIT
+docker build "$1" --iidfile "$iidfile" >&2
+cat "$iidfile"

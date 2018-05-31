@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e -u -x
+local_ip=$1
+remote_ip=$2
+exec pppd \
+    nodetach \
+    notty \
+    noauth \
+    silent \
+    ipparam vpn \
+    "$local_ip:$remote_ip"
