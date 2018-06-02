@@ -33,7 +33,16 @@ A very simple and reliable measure must force all traffic through the proxy.
       # iptables -I FORWARD 1 -i ppp-deluged -j ACCEPT
   
   On [OpenWrt](https://openwrt.org/) it can be added through Network &rarr;
-  Firewall &rarr; Custom Rules
+  Firewall &rarr; Custom Rules or, alternatively:
+
+  * Network &rarr; Interfaces &rarr; Add new interface
+    * Name: `deluged`
+    * Protocol: `Unmanaged`
+    * Custom Interface: `ppp-deluged`
+  * Network &rarr; Firewall &rarr; General Settings &rarr; Zones &rarr; Add
+    * Name: `deluged`
+    * Covered networks: `deluged`
+    * Inter-Zone Forwarding (both destination and source): `wan`
 
 * Add the following to `~/.ssh/config`:
 
@@ -62,6 +71,19 @@ A very simple and reliable measure must force all traffic through the proxy.
 
       deluge-via-proxy$ ./deluge-console
 
+# Port forwarding
+
+* If seeding performs badly, set the following in `~/var-lib-deluged/core.conf`:
+
+      "random_port": false
+
+      "listen_ports": [
+        6881,
+        6891
+      ]
+
+  and forward them to `192.168.77.2` on the server.
+
 # How does it work
 
 * `deluged` container is connected only to the internal `deluge` network.
@@ -85,14 +107,11 @@ A very simple and reliable measure must force all traffic through the proxy.
 
 # Debugging
 
-* To debug [libtorrent](https://www.libtorrent.org), add the following to
-  `images/deluged/Dockerfile`:
-
-   Then start the container:
+* To debug [libtorrent](https://www.libtorrent.org), use:
 
       deluge-via-proxy$ ./debug
 
-   and use either
+   and then either
 
        # strace \
            -f \
