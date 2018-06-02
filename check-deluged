@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e -u
+
+local_ip=$(docker exec -it deluged-proxy curl ifconfig.co | tr -d '\r')
+proxy_ip=$(docker exec -it deluged curl ifconfig.co | tr -d '\r')
+if [ "$local_ip" = "$proxy_ip" ]; then
+    echo "FAIL: local $local_ip = proxy $proxy_ip" >&2
+    exit 1
+else
+    echo "OK: local $local_ip != proxy $proxy_ip" >&2
+fi

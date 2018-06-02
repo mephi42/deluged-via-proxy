@@ -60,11 +60,7 @@ A very simple and reliable measure must force all traffic through the proxy.
 
 * Make sure all traffic is really proxied:
 
-      deluge-via-proxy$ curl ifconfig.co
-      deluge-via-proxy$ docker exec -it deluged curl ifconfig.co
-
-  The first command should print the local IP. The second command should print
-  the `<ssh proxy ip>`.
+      deluge-via-proxy$ ./check-deluged
 
 * Start the client:
 
@@ -125,7 +121,7 @@ A very simple and reliable measure must force all traffic through the proxy.
                --do-not-daemonize \
                --config=/var/lib/deluged/config \
                --loglevel=debug &
-       less strace.out
+       # less strace.out
 
    or
 
