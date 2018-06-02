@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e -o pipefail -u -x
+set -e -u -x
 cd "$(dirname "$0")"
 
 docker exec \

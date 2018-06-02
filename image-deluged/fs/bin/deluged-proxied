@@ -8,6 +8,12 @@ socat TCP-CONNECT:deluged-proxy:7777 EXEC:"pppd-helper $local_ip $remote_ip" &
 while ! ping -c 1 -W 1 "$remote_ip"; do :; done
 while route delete default; do :; done
 route add default gw "$remote_ip"
+host_ip=$(curl deluged-proxy:8080)
+proxy_ip=$(curl ifconfig.co)
+if [ "$host_ip" = "$proxy_ip" ]; then
+    echo "FAIL: host $host_ip = proxy $proxy_ip" >&2
+    exit 1
+fi
 exec deluged \
     --do-not-daemonize \
     --config=/var/lib/deluged/config \

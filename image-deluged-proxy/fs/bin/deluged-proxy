@@ -11,4 +11,5 @@ ssh="ssh \
         notty \
         noauth \
         ifname ppp-deluged"
+socat TCP-LISTEN:8080,reuseaddr,fork EXEC:"curl ifconfig.co" &
 exec socat TCP-LISTEN:7777,reuseaddr,fork EXEC:"$ssh"

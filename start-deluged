@@ -9,6 +9,7 @@ docker run \
     --detach \
     --name=deluged-proxy \
     --volume="$(realpath ~/.ssh):/root/.ssh" \
+    --init \
     "$(./docker-build image-deluged-proxy)"
 docker network connect deluge deluged-proxy
 # TODO: remove --privileged and keep just --cap-add=NET_ADMIN
@@ -21,4 +22,5 @@ docker run \
     --volume="$(realpath ~/var-lib-deluged):/var/lib/deluged" \
     --dns=8.8.8.8 \
     --network=deluge \
+    --init \
     "$(./docker-build image-deluged)"

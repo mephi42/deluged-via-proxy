@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e -u
+cd "$(dirname "$0")"
+
+for path in $(git ls-files); do
+    if [ "$(head -c 9 "$path")" = "#!/bin/sh" ]; then
+        echo "[SHELLCHECK] $path" >&2
+        shellcheck "$path"
+    fi
+done

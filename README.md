@@ -58,10 +58,6 @@ A very simple and reliable measure must force all traffic through the proxy.
 
       deluge-via-proxy$ ./restart-deluged
 
-* Make sure all traffic is really proxied:
-
-      deluge-via-proxy$ ./check-deluged
-
 * Start the client:
 
       deluge-via-proxy$ ./deluge-console
