@@ -2,5 +2,5 @@
 set -e -u -x
 cd "$(dirname "$0")"
 
-./stop-deluged
-./start-deluged
+./stop
+./start

@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e -u -x
+cd "$(dirname "$0")"
+
+base="$(./docker-build images/base)"
+deluge="$(./docker-build images/deluged --build-arg=base="$base")"
+exec docker run \
+    --interactive \
+    --tty \
+    --privileged \
+    --volume="$(realpath ~/var-lib-deluged):/var/lib/deluged" \
+    --dns=8.8.8.8 \
+    --network=deluge \
+    --init \
+    "$(./docker-build images/deluged-debug --build-arg=base="$deluge")" \
+    bash

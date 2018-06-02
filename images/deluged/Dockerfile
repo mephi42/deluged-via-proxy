@@ -1,12 +1,9 @@
-FROM ubuntu
+ARG base
+FROM $base
 RUN apt-get -y update && \
     apt-get -y install \
-        curl \
         deluged \
         deluge-console \
-        iproute2 \
-        inetutils-ping \
-        net-tools \
         ppp \
         socat \
         tzdata

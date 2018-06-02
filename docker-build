@@ -7,5 +7,5 @@ rm_iidfile() {
     rm "$iidfile"
 }
 trap rm_iidfile EXIT
-docker build "$1" --iidfile "$iidfile" >&2
+docker build --iidfile "$iidfile" "$@" >&2
 cat "$iidfile"

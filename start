@@ -5,12 +5,13 @@ cd "$(dirname "$0")"
 docker network create \
     --internal \
     deluge
+base="$(./docker-build images/base)"
 docker run \
     --detach \
     --name=deluged-proxy \
     --volume="$(realpath ~/.ssh):/root/.ssh" \
     --init \
-    "$(./docker-build image-deluged-proxy)"
+    "$(./docker-build images/deluged-proxy --build-arg=base="$base")"
 docker network connect deluge deluged-proxy
 # TODO: remove --privileged and keep just --cap-add=NET_ADMIN
 # TODO: https://github.com/moby/moby/issues/37193
@@ -23,4 +24,4 @@ docker run \
     --dns=8.8.8.8 \
     --network=deluge \
     --init \
-    "$(./docker-build image-deluged)"
+    "$(./docker-build images/deluged --build-arg=base="$base")"

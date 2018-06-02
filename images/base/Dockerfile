@@ -4,8 +4,5 @@ RUN apt-get -y update && \
         curl \
         iproute2 \
         inetutils-ping \
-        socat \
-        ssh \
         net-tools
 COPY fs/ /
-CMD ["deluged-proxy"]

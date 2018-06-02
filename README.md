@@ -56,7 +56,7 @@ A very simple and reliable measure must force all traffic through the proxy.
 
 * Start the daemon and the proxy:
 
-      deluge-via-proxy$ ./restart-deluged
+      deluge-via-proxy$ ./restart
 
 * Start the client:
 
@@ -86,25 +86,11 @@ A very simple and reliable measure must force all traffic through the proxy.
 # Debugging
 
 * To debug [libtorrent](https://www.libtorrent.org), add the following to
-  `image-deluged/Dockerfile`:
-
-      RUN apt-get -y install gdb gnupg2 less lsb-release strace
-      RUN echo "deb http://ddebs.ubuntu.com $(lsb_release -cs) main restricted universe multiverse"           >/etc/apt/sources.list.d/ddebs.list && \
-          echo "deb http://ddebs.ubuntu.com $(lsb_release -cs)-updates main restricted universe multiverse"  >>/etc/apt/sources.list.d/ddebs.list && \
-          echo "deb http://ddebs.ubuntu.com $(lsb_release -cs)-proposed main restricted universe multiverse" >>/etc/apt/sources.list.d/ddebs.list
-      RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 428D7C01 C8CAB6595FDFF622
-      RUN apt-get -y update && apt-get -y install libtorrent-rasterbar-dbg
+  `images/deluged/Dockerfile`:
 
    Then start the container:
 
-      $ docker run \
-          --interactive \
-          --tty \
-          --privileged \
-          --volume="$(realpath ~/var-lib-deluged):/var/lib/deluged" \
-          --network=deluge \
-          "$(./docker-build image-deluged)" \
-          bash
+      deluge-via-proxy$ ./debug
 
    and use either
 

@@ -9,7 +9,7 @@ while ! ping -c 1 -W 1 "$remote_ip"; do :; done
 while route delete default; do :; done
 route add default gw "$remote_ip"
 host_ip=$(curl deluged-proxy:8080)
-proxy_ip=$(curl ifconfig.co)
+proxy_ip=$(whatismyip)
 if [ "$host_ip" = "$proxy_ip" ]; then
     echo "FAIL: host $host_ip = proxy $proxy_ip" >&2
     exit 1
