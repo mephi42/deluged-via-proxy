@@ -2,6 +2,14 @@
 set -e -u -x
 cd "$(dirname "$0")"
 
-if docker inspect deluged >/dev/null 2>&1; then docker rm -f deluged; fi
-if docker inspect deluged-proxy >/dev/null 2>&1; then docker rm -f deluged-proxy; fi
-if docker network inspect deluge >/dev/null 2>&1; then docker network rm deluge; fi
+if docker inspect deluged >/dev/null 2>&1; then
+    docker stop deluged
+    docker rm deluged
+fi
+if docker inspect deluged-proxy >/dev/null 2>&1; then
+    docker stop deluged-proxy
+    docker rm deluged-proxy
+fi
+if docker network inspect deluge >/dev/null 2>&1; then
+    docker network rm deluge
+fi
