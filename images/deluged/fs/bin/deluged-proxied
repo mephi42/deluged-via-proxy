@@ -14,6 +14,11 @@ if [ "$host_ip" = "$proxy_ip" ]; then
     echo "FAIL: host $host_ip = proxy $proxy_ip" >&2
     exit 1
 fi
+first_hop=$(traceroute -n 8.8.8.8 -m 1 | tail -n1 | awk '{ print $2 }')
+if [ "$first_hop" != "$remote_ip" ]; then
+    echo "FAIL: first hop $first_hop != remote peer $remote_ip" >&2
+    exit 1
+fi
 exec deluged \
     --do-not-daemonize \
     --config=/var/lib/deluged/config \

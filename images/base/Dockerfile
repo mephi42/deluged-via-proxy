@@ -4,5 +4,6 @@ RUN apt-get -y update && \
         curl \
         iproute2 \
         inetutils-ping \
-        net-tools
+        net-tools \
+        traceroute
 COPY fs/ /
