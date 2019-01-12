@@ -22,4 +22,5 @@ fi
 exec deluged \
     --do-not-daemonize \
     --config=/var/lib/deluged/config \
-    --loglevel=debug
+    --loglevel=debug \
+    --pidfile=/var/run/deluged.pid

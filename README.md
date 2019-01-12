@@ -73,7 +73,8 @@ A very simple and reliable measure must force all traffic through the proxy.
 
 # Port forwarding
 
-* If seeding performs badly, set the following in `~/var-lib-deluged/core.conf`:
+* If seeding performs badly, set the following in
+  `~/var-lib-deluged/config/core.conf`:
 
       "random_port": false
 
