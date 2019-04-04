@@ -9,7 +9,7 @@ base="$(./docker-build images/base)"
 docker run \
     --detach \
     --name=deluged-proxy \
-    --volume="$(realpath ~/.ssh):/root/.ssh" \
+    --volume="$(realpath ~/.ssh):/root/.ssh-host" \
     --init \
     "$(./docker-build images/deluged-proxy --build-arg=base="$base")"
 docker network connect deluge deluged-proxy
