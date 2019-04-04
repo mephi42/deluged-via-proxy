@@ -1,4 +1,5 @@
 #!/bin/sh
 set -e -u -x
-
-exec curl https://ifconfig.co
+while ! curl https://ifconfig.co; do
+    sleep 1
+done

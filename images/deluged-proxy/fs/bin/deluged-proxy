@@ -13,4 +13,6 @@ ssh="ssh \
         noauth \
         ifname ppp-deluged"
 socat TCP-LISTEN:8080,reuseaddr,fork EXEC:whatismyip &
-while true; do socat TCP-LISTEN:7777,reuseaddr,fork EXEC:"$ssh"; done
+while true; do
+    socat TCP-LISTEN:7777,reuseaddr,fork EXEC:"$ssh" || true
+done
