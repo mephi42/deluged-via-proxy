@@ -1,15 +1,12 @@
 #!/bin/sh
 set -e -u -x
 cd "$(dirname "$0")"
-
-if docker inspect deluged >/dev/null 2>&1; then
-    docker stop deluged
-    docker rm deluged
-fi
-if docker inspect deluged-proxy >/dev/null 2>&1; then
-    docker stop deluged-proxy
-    docker rm deluged-proxy
-fi
+for container in deluged deluged-proxy deluged-public; do
+    if docker inspect "$container" >/dev/null 2>&1; then
+        docker stop "$container"
+        docker rm "$container"
+    fi
+done
 if docker network inspect deluge >/dev/null 2>&1; then
     docker network rm deluge
 fi

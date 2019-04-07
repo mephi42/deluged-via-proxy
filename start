@@ -25,3 +25,10 @@ docker run \
     --network=deluge \
     --init \
     "$(./docker-build images/deluged --build-arg=base="$base")"
+docker run \
+    --detach \
+    --name=deluged-public \
+    --publish=0.0.0.0:58846:58846 \
+    --init \
+    "$(./docker-build images/deluged-public --build-arg=base="$base")"
+docker network connect deluge deluged-public

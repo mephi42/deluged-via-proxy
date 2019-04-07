@@ -1,9 +1,9 @@
 # Abstract
 
-Run [`deluged`](https://deluge-torrent.org/) via proxy in an isolated
-environment, so that it cannot make direct connections.
+Run [`deluged`](https://deluge-torrent.org/) in an isolated environment, so
+that it cannot make direct connections.
 
-A very simple and reliable measure must force all traffic through the proxy.
+A very simple and reliable measure forces all traffic through the proxy.
 
 # Prerequisites
 
@@ -94,8 +94,7 @@ A very simple and reliable measure must force all traffic through the proxy.
     * One end of `pppd` is connected to a local interface. A default route
       points to a remote peer of this interface.
     * The other end is connected to port `7777` in `deluged-proxy` container.
-* `deluged-proxy` container is connected to both `deluge` network and
-  the Internet.
+* `deluged-proxy` container is connected to both `deluge` network and LAN.
   * Incoming connections to port `7777` are bound to new `ssh` connection to
     the server, which runs `pppd` command.
   * The effect is that `pppd` instances inside the `deluged` container and on
@@ -104,6 +103,10 @@ A very simple and reliable measure must force all traffic through the proxy.
     is [incompatible with `ssh`](https://stackoverflow.com/questions/41967217),
     and `ssh`'s own `-D` option is not used, because it [does not support UDP](
     https://superuser.com/questions/639425).
+* `deluged-public` container is also connected to both `deluge` network and
+  LAN. It publishes `deluged`'s port 58846 in order for GUI clients to connect.
+  It is needed, because `deluged` must not be attached to the host network, and
+  therefore its ports cannot be published directly.
 * `deluge-console` is `docker exec`ed inside the `deluged` container.
 
 # Debugging
