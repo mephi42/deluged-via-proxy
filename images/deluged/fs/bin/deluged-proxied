@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e -u -x
-
+loglevel=info
 local_ip=192.168.77.2
 remote_ip=192.168.77.1
 [ -e /dev/ppp ] || mknod /dev/ppp c 108 0
@@ -11,7 +11,7 @@ remote_ip=192.168.77.1
             while route delete default; do :; done
             route add default gw "$remote_ip"
         ) &
-        socat TCP-CONNECT:deluged-proxy:7777 EXEC:"pppd-helper $local_ip $remote_ip"
+        socat TCP-CONNECT:deluged-proxy:7777 EXEC:"pppd-helper $local_ip $remote_ip" || true
     done
 ) &
 host_ip=$(curl deluged-proxy:8080)
@@ -28,5 +28,5 @@ fi
 exec deluged \
     --do-not-daemonize \
     --config=/var/lib/deluged/config \
-    --loglevel=debug \
+    --loglevel="$loglevel" \
     --pidfile=/var/run/deluged.pid
