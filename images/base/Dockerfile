@@ -1,4 +1,5 @@
-FROM ubuntu
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update && \
     apt-get -y install \
         curl \

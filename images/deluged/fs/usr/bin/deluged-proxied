@@ -14,7 +14,7 @@ remote_ip=192.168.77.1
         socat TCP-CONNECT:deluged-proxy:7777 EXEC:"pppd-helper $local_ip $remote_ip" || true
     done
 ) &
-host_ip=$(curl deluged-proxy:8080)
+host_ip=$(socat TCP-CONNECT:deluged-proxy:8080 STDOUT)
 proxy_ip=$(whatismyip)
 if [ "$host_ip" = "$proxy_ip" ]; then
     echo "FAIL: host $host_ip = proxy $proxy_ip" >&2
@@ -25,8 +25,8 @@ if [ "$first_hop" != "$remote_ip" ]; then
     echo "FAIL: first hop $first_hop != remote peer $remote_ip" >&2
     exit 1
 fi
+# Omit --pidfile: https://dev.deluge-torrent.org/ticket/3385
 exec deluged \
     --do-not-daemonize \
     --config=/var/lib/deluged/config \
-    --loglevel="$loglevel" \
-    --pidfile=/var/run/deluged.pid
+    --loglevel="$loglevel"

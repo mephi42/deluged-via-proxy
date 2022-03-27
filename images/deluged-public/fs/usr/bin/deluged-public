@@ -1,0 +1,3 @@
+#!/bin/sh
+set -e -u -x
+socat TCP-LISTEN:58846,reuseaddr,fork TCP-CONNECT:deluged:58846

@@ -3,6 +3,7 @@ set -e -u -x
 cd "$(dirname "$0")"
 
 docker exec \
+    --env=TERM=xterm-256color \
     --interactive \
     --tty \
     deluged \
