@@ -109,6 +109,15 @@ A very simple and reliable measure forces all traffic through the proxy.
   therefore its ports cannot be published directly.
 * `deluge-console` is `docker exec`ed inside the `deluged` container.
 
+# Misc
+
+* There appears to be a [bug with connection limiting in deluged](
+  https://askubuntu.com/a/744411). Set `max_connections_global = -1` as a
+  workaround.
+
+* When running deluged on slow hardware, deleting unneeded torrents
+  helps with performance.
+
 # Debugging
 
 * To debug [libtorrent](https://www.libtorrent.org), use:
