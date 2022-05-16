@@ -78,12 +78,18 @@ A very simple and reliable measure forces all traffic through the proxy.
 
       "random_port": false
 
+      "listen_interface": "0.0.0.0"
+
       "listen_ports": [
         6881,
         6891
       ]
 
   and forward them to `192.168.77.2` on the server.
+
+  Setting `listen_interface` to `0.0.0.0` here is safe, since the daemon runs
+  inside a container. Doing so helps with reestablishing `ppp0` interface on
+  reconnect.
 
 # How does it work
 
@@ -111,11 +117,7 @@ A very simple and reliable measure forces all traffic through the proxy.
 
 # Misc
 
-* There appears to be a [bug with connection limiting in deluged](
-  https://askubuntu.com/a/744411). Set `max_connections_global = -1` as a
-  workaround.
-
-* When running deluged on slow hardware, deleting unneeded torrents
+* When running deluged on slow hardware, deleting or pausing unneeded torrents
   helps with performance.
 
 # Debugging
