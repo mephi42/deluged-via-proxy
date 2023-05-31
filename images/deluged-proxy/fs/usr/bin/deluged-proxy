@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e -u -x
+mv "$HOME/.ssh" "$HOME/.ssh.old" || true
 cp -p -r "$HOME/.ssh-host" "$HOME/.ssh"
 chmod -R go-rwx "$HOME/.ssh"
 ssh="ssh \
