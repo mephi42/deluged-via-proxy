@@ -91,6 +91,11 @@ A very simple and reliable measure forces all traffic through the proxy.
   inside a container. Doing so helps with reestablishing `ppp0` interface on
   reconnect.
 
+# GUI
+
+In order to be able to use e.g. `deluge-gtk`, set `"allow_remote": true` in
+`core.conf`.
+
 # How does it work
 
 * `deluged` container is connected only to the internal `deluge` network.
